@@ -1,0 +1,34 @@
+<div class="col-md-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <div class="h3">Editar Archivo</div>
+        </div>
+        <div class="card-body">
+            <form action="/archivos/edit-archivo/{{archivo._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group">
+                    <input type="text" name="title" class="form-control" placeholder="Título" value="{{archivo.title}}"
+                        autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="idArchivo" class="form-control" placeholder="Identificación del archivo"
+                        value="{{archivo.idArchivo}}" autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ubicacion" class="form-control" placeholder="Ubicación del Archivo"
+                        value="{{archivo.ubicacion}}" autofocus>
+                </div>
+                <div class="form-group">
+                    <textarea name="description" class="form-control">{{archivo.description}}</textarea>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
