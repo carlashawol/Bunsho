@@ -8,6 +8,7 @@ const ArchivoSchema = new Schema({
     ubicacion: { type: String, default: null },
     description: { type: String, required: true },
     estado: {type: String, required: true},
+    digital: {type: Object, required: false},
     date: { type: Date, default: Date.now }
 });
 

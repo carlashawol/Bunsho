@@ -1,13 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
+const Reporte = require('../models/Reporte');
 const Archivo = require('../models/Archivo');
 const { isAuthenticated } = require('../helpers/auth');
 
+
+
 router.post('/tarjeta', async (req, res) => {
-    const { id, ubicacion } = req.body;
+    //const { id, ubicacion } = req.body;
     const Disponible = "Disponible"
     const NoDisponible = "No Disponible"
+    const id = "123A";
+    const ubicacion = "estanteria 4"
+    var nuevoReporte = null;
     console.log(id);
     console.log(ubicacion);
     const archivo = await Archivo.find({idRFID:id});
@@ -24,6 +30,12 @@ router.post('/tarjeta', async (req, res) => {
             console.log("actualizado2");
         }
         console.log(actualizar);
+        const idArchivo= actualizar.idArchivo;
+        const estado =actualizar.estado;
+        const fecha= Date.now();
+        nuevoReporte = new Reporte({idArchivo, ubicacion, estado, fecha});
+        await nuevoReporte.save();
+
     } else {
         console.log(archivo);
         console.log("tarjeta nueva");
@@ -35,7 +47,13 @@ router.post('/tarjeta', async (req, res) => {
             await asignacion.updateOne({ubicacion:ubicacion});
         }
         console.log(asignacion);
+        const idArchivo = asignacion.idArchivo;
+        const estado = asignacion.estado;
+        const fecha= Date.now();
+        nuevoReporte = new Reporte({idArchivo, ubicacion, estado , fecha});
+        await nuevoReporte.save();
     }
+    console.log(nuevoReporte);
 });
 
 router.get('/archivos/add', isAuthenticated, (req, res) => { 
@@ -100,6 +118,18 @@ router.delete('/archivos/delete/:id', async (req, res) => {
 
 router.get('/archivos/buscar-archivo', isAuthenticated, async (req, res) => {
     res.render('archivos/buscar-archivo');
+});
+
+
+router.get('/archivos/descargar-archivo/:id', isAuthenticated, async (req, res) => {
+    const archivo = await Archivo.findById(req.params.id);
+    res.download(archivo.digital);
+});
+
+router.get('/archivos/generar-reporte/:id', isAuthenticated, async (req, res) => {
+    const estados = await Reporte.findById(req.params.id);
+    console.log(estados);
+    res.redirect('/tarjeta');
 });
 
 router.post('/archivos/archivo-encontrado', async (req, res) => {

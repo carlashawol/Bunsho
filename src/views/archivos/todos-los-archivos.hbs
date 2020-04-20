@@ -6,11 +6,18 @@
                 <h4 class="card-title d-flex justify-content-between align">
                     {{title}} <a href="/archivos/edit/{{_id}}"><i class="fas fa-edit"></i></a>
                 </h4>
+               
+
                 <p>ID Archivo: {{idArchivo}}</p>
                 <p>ID RFID: {{idRFID}}</p>
                 <p>Ubicación: {{ubicacion}}</p>
                 <p>Descripción: {{description}}</p>
                 <p>Estado: {{estado}}</p>
+                <a href="/archivos/descargar-archivo/{{_id}}"> Descargar Archivo Digital</a>
+
+                <a href="/archivos/generar-reporte/{{_id}}"><i class="fas fa-bars"> Generar Reporte</i></a>
+                 <br>
+                <br/>
                 <form action="/archivos/delete/{{_id}}?_method=DELETE" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button class="btn btn-danger btn-block btn-sm" type="submit">
